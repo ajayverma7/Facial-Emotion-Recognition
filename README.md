@@ -66,7 +66,7 @@ python setup_and_run.py
 ### 📦 Manual Installation
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/face-emotion-recognition.git
+git clone https://github.com/ajayverma7/face-emotion-recognition.git
 cd face-emotion-recognition
 
 # 2. Install Python dependencies
@@ -183,17 +183,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **OpenCV** for computer vision operations
 - **Flask** for web framework
 - **R Community** for statistical analysis tools
-
-## 📞 Support
-
-- 📧 **Email**: your.email@example.com
-- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/face-emotion-recognition/issues)
-- 📖 **Documentation**: [Installation Guide](INSTALLATION_GUIDE.md)
-
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/face-emotion-recognition&type=Date)](https://star-history.com/#yourusername/face-emotion-recognition&Date)
-
----
-
 **Made with ❤️ for academic learning and research**
