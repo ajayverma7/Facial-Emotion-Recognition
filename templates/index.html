@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Facial Emotion Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-brain"></i> Facial Emotion Recognition</h1>
+                <p>Real-time emotion detection using AI and computer vision</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="webcam">
+                        <i class="fas fa-video"></i> Live Camera
+                    </button>
+                    <button class="tab-button" data-tab="upload">
+                        <i class="fas fa-upload"></i> Upload Image
+                    </button>
+                    <button class="tab-button" data-tab="statistics">
+                        <i class="fas fa-chart-bar"></i> Statistics
+                    </button>
+                    <button class="tab-button" data-tab="history">
+                        <i class="fas fa-history"></i> History
+                    </button>
+                </div>
+            </div>
+
+            <!-- Webcam Tab -->
+            <div id="webcam-tab" class="tab-content active">
+                <div class="webcam-section">
+                    <div class="video-container">
+                        <video id="video" autoplay muted playsinline></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                        <div id="emotion-overlay" class="emotion-overlay"></div>
+                    </div>
+                    
+                    <div class="webcam-controls">
+                        <button id="start-camera" class="btn btn-primary">
+                            <i class="fas fa-play"></i> Start Camera
+                        </button>
+                        <button id="stop-camera" class="btn btn-secondary" style="display: none;">
+                            <i class="fas fa-stop"></i> Stop Camera
+                        </button>
+                        <button id="capture-frame" class="btn btn-accent" style="display: none;">
+                            <i class="fas fa-camera"></i> Capture & Analyze
+                        </button>
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="auto-detect" checked>
+                            <span class="checkmark"></span>
+                            Auto-detect emotions
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Real-time Results -->
+                <div id="realtime-results" class="results-section" style="display: none;">
+                    <h3><i class="fas fa-brain"></i> Current Emotion</h3>
+                    <div class="emotion-display">
+                        <div class="dominant-emotion">
+                            <span class="emotion-label" id="dominant-emotion">-</span>
+                            <span class="confidence" id="dominant-confidence">0%</span>
+                        </div>
+                        <div class="emotion-bars" id="emotion-bars"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Tab -->
+            <div id="upload-tab" class="tab-content">
+                <div class="upload-section">
+                    <div class="upload-area" id="upload-area">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Upload Image for Analysis</h3>
+                            <p>Drag and drop an image here or click to select</p>
+                            <input type="file" id="file-input" accept="image/*" style="display: none;">
+                            <button class="btn btn-primary" onclick="document.getElementById('file-input').click()">
+                                <i class="fas fa-folder-open"></i> Choose File
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="upload-results" class="results-section" style="display: none;">
+                        <div class="image-analysis">
+                            <div class="uploaded-image">
+                                <img id="uploaded-img" src="" alt="Uploaded image">
+                            </div>
+                            <div class="analysis-results">
+                                <h3><i class="fas fa-search"></i> Analysis Results</h3>
+                                <div class="emotion-display">
+                                    <div class="dominant-emotion">
+                                        <span class="emotion-label" id="upload-dominant-emotion">-</span>
+                                        <span class="confidence" id="upload-dominant-confidence">0%</span>
+                                    </div>
+                                    <div class="emotion-bars" id="upload-emotion-bars"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div id="statistics-tab" class="tab-content">
+                <div class="statistics-section">
+                    <h3><i class="fas fa-chart-pie"></i> Emotion Statistics</h3>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="total-detections">0</h4>
+                                <p>Total Detections</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-smile"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="most-common-emotion">-</h4>
+                                <p>Most Common Emotion</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="emotion-chart">
+                        <h4>Emotion Distribution</h4>
+                        <div class="chart-container" id="emotion-chart"></div>
+                    </div>
+
+                    <div class="stats-actions">
+                        <button class="btn btn-primary" onclick="loadStatistics()">
+                            <i class="fas fa-sync"></i> Refresh Stats
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportData()">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                        <button class="btn btn-danger" onclick="clearData()">
+                            <i class="fas fa-trash"></i> Clear Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Tab -->
+            <div id="history-tab" class="tab-content">
+                <div class="history-section">
+                    <h3><i class="fas fa-history"></i> Detection History</h3>
+                    
+                    <div class="history-controls">
+                        <input type="date" id="date-filter" class="form-control">
+                        <select id="emotion-filter" class="form-control">
+                            <option value="">All Emotions</option>
+                            <option value="happy">Happy</option>
+                            <option value="sad">Sad</option>
+                            <option value="angry">Angry</option>
+                            <option value="surprise">Surprise</option>
+                            <option value="neutral">Neutral</option>
+                            <option value="disgust">Disgust</option>
+                            <option value="fear">Fear</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="filterHistory()">
+                            <i class="fas fa-filter"></i> Filter
+                        </button>
+                    </div>
+
+                    <div class="history-list" id="history-list">
+                        <!-- History items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay" style="display: none;">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Processing...</p>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

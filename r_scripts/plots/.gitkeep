@@ -1,0 +1,2 @@
+# This file ensures the plots directory is tracked by Git
+# R scripts will generate plots in this directory

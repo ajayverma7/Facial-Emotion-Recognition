@@ -1,0 +1,44 @@
+{
+  "emotions": [
+    {
+      "id": 1,
+      "timestamp": "2025-11-09T16:41:12.982800",
+      "dominant_emotion": "angry",
+      "emotions": {
+        "angry": 98.15199279785156,
+        "disgust": 1.6089932918548584,
+        "fear": 0.02422099933028221,
+        "happy": 0.0037690165918320417,
+        "sad": 0.07075579464435577,
+        "surprise": 0.0014603802701458335,
+        "neutral": 0.13879680633544922
+      },
+      "confidence": 98.15199279785156,
+      "source": "upload",
+      "face_detected": true,
+      "face_region": {
+        "x": 134,
+        "y": 9,
+        "w": 375,
+        "h": 349,
+        "left_eye": null,
+        "right_eye": null
+      },
+      "image_path": "static/uploads\\20251109_164112_pngtree-close-up-of-a-man-with-anger-image_2873854.jpg"
+    }
+  ],
+  "statistics": {
+    "total_detections": 1,
+    "emotion_counts": {
+      "happy": 0,
+      "sad": 0,
+      "angry": 1,
+      "surprise": 0,
+      "neutral": 0,
+      "disgust": 0,
+      "fear": 0
+    },
+    "created_at": "2025-11-09T16:40:21.267452",
+    "last_updated": "2025-11-09T16:41:12.982823"
+  }
+}

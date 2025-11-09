@@ -1,0 +1,2 @@
+# This file ensures the processed_images directory is tracked by Git
+# R image experiments will generate processed images in this directory
